@@ -25,7 +25,7 @@ public class LinkedListDeque<T> {
 
 
     public LinkedListDeque(LinkedListDeque other) {
-        sentinel = new IntNode(null, s , null);
+        sentinel = new IntNode(null, s, null);
         IntNode p = sentinel.next;
         IntNode o = other.sentinel.next;
         for (int i = 0; i < other.size(); i++) {

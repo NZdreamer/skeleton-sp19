@@ -37,16 +37,23 @@ public class ArrayDeque<T> {
     private void resize(int capacity) {
         arraySize = capacity;
         T[] a = (T[]) new Object[capacity];
-        if (nextFirst < nextLast) {
-            System.arraycopy(items, nextFirst, a, 0, size + 1);
-            nextFirst = 0;
-            nextLast = size + 2;
-        } else {
-            System.arraycopy(items, 0, a, 0, nextLast);
-            System.arraycopy(items, nextFirst, a, capacity - size + nextFirst - 1,
-                    size - nextFirst + 1);
-            nextFirst = next(capacity - size + nextFirst - 1);
+        int oldIndex = next(nextFirst + 1);
+        for (int newIndex = 0; newIndex < size; newIndex++) {
+            a[newIndex] = items[oldIndex];
+            oldIndex = next(oldIndex + 1);
         }
+        nextFirst = capacity - 1;
+        nextLast = size;
+//        if (nextFirst < nextLast) {
+//            System.arraycopy(items, nextFirst, a, 0, size + 1);
+//            nextFirst = 0;
+//            nextLast = size + 2;
+//        } else {
+//            System.arraycopy(items, 0, a, 0, nextLast);
+//            System.arraycopy(items, nextFirst, a, capacity - size + nextFirst - 1,
+//                    size - nextFirst + 1);
+//            nextFirst = next(capacity - size + nextFirst - 1);
+//        }
 
         items = a;
     }
