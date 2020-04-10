@@ -14,7 +14,7 @@ public class ArrayDeque<T> {
         items = (T[]) new Object[arraySize];
         size = 0;
         nextFirst = arraySize - 1;
-        nextLast = size + 1;
+        nextLast = size;
     }
 
     public ArrayDeque(ArrayDeque other) {
