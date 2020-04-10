@@ -35,13 +35,13 @@ public class ArrayDeque<T> {
 
 
     private void resize(int capacity) {
-        arraySize = capacity;
         T[] a = (T[]) new Object[capacity];
         int oldIndex = next(nextFirst + 1);
         for (int newIndex = 0; newIndex < size; newIndex++) {
             a[newIndex] = items[oldIndex];
             oldIndex = next(oldIndex + 1);
         }
+        arraySize = capacity;
         nextFirst = capacity - 1;
         nextLast = size;
 //        if (nextFirst < nextLast) {
