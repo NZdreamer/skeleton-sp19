@@ -6,9 +6,6 @@ public class ArrayDeque<T> {
     private int nextLast;
     private int arraySize = 8;
 
-    /** nextFirst
-     * nextLast
-     */
 
     public ArrayDeque() {
         items = (T[]) new Object[arraySize];
@@ -22,6 +19,9 @@ public class ArrayDeque<T> {
         for (int i = 0; i < other.size(); i++) {
             items[i] = (T) other.items[i];
         }
+        nextFirst = other.nextFirst;
+        nextLast = other.nextLast;
+        size = other.size;
     }
 
     private int next(int next) {
