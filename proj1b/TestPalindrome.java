@@ -44,7 +44,9 @@ public class TestPalindrome {
         assertFalse(palindrome.isPalindrome("Aa", ccc));
 
         CharacterComparator cc5 = new OffByN(5);
+        CharacterComparator cc7 = new OffByN(7);
         assertTrue(palindrome.isPalindrome("af", cc5));
+        assertTrue(palindrome.isPalindrome("bibi", cc7));
         assertFalse(palindrome.isPalindrome("testsomething", cc5));
     }
 
