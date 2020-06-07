@@ -16,6 +16,12 @@ import huglife.Empty;
 public class TestPlip {
 
     @Test
+    public void testName() {
+        Plip p = new Plip(2);
+        assertEquals("plip", p.name());
+    }
+
+    @Test
     public void testBasics() {
         Plip p = new Plip(2);
         assertEquals(2, p.energy(), 0.01);
@@ -33,9 +39,14 @@ public class TestPlip {
     @Test
     public void testReplicate() {
         // TODO
+        Plip p = new Plip(1.6);
+        Plip p2 = p.replicate();
+        assertEquals(0.8, p.energy(), 0.01);
+        assertEquals(0.8, p2.energy(), 0.01);
+
     }
 
-    //@Test
+    @Test
     public void testChoose() {
 
         // No empty adjacent spaces; stay.

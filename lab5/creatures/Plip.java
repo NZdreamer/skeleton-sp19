@@ -1,14 +1,12 @@
 package creatures;
 
-import huglife.Creature;
-import huglife.Direction;
-import huglife.Action;
-import huglife.Occupant;
+import huglife.*;
 
 import java.awt.Color;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * An implementation of a motile pacifist photosynthesizer.
@@ -29,6 +27,18 @@ public class Plip extends Creature {
      * blue color.
      */
     private int b;
+    /**
+     * lose 0.15 units of energy when moving
+     */
+    private static final double movEnergyLost = 0.15;
+    /**
+     * gain 0.2 units of energy when stay
+     */
+    private static final double stayEnergyGain = 0.2;
+    /**
+     * the possibility for Plip to move when there is a clorus neighbour
+     */
+    private double movePossibility = 0.5;
 
     /**
      * creates plip with energy equal to E.
@@ -48,6 +58,11 @@ public class Plip extends Creature {
         this(1);
     }
 
+    /** return name */
+    public String name() {
+        return name;
+    }
+
     /**
      * Should return a color with red = 99, blue = 76, and green that varies
      * linearly based on the energy of the Plip. If the plip has zero energy,
@@ -57,7 +72,9 @@ public class Plip extends Creature {
      * that you get this exactly correct.
      */
     public Color color() {
-        g = 63;
+        r = 99;
+        b = 76;
+        g = (int) (96 * energy + 63);
         return color(r, g, b);
     }
 
@@ -74,7 +91,10 @@ public class Plip extends Creature {
      * private static final variable. This is not required for this lab.
      */
     public void move() {
-        // TODO
+        energy = energy - movEnergyLost;
+        if (energy < 0) {
+            energy = 0;
+        }
     }
 
 
@@ -82,7 +102,10 @@ public class Plip extends Creature {
      * Plips gain 0.2 energy when staying due to photosynthesis.
      */
     public void stay() {
-        // TODO
+        energy = energy + stayEnergyGain;
+        if (energy > 2) {
+            energy = 2;
+        }
     }
 
     /**
@@ -91,7 +114,8 @@ public class Plip extends Creature {
      * Plip.
      */
     public Plip replicate() {
-        return this;
+        energy = energy / 2;
+        return new Plip(energy);
     }
 
     /**
@@ -114,17 +138,39 @@ public class Plip extends Creature {
         // TODO
         // (Google: Enhanced for-loop over keys of NEIGHBORS?)
         // for () {...}
+        for (Direction d : neighbors.keySet()) {
+            if (neighbors.get(d).name().equals("empty")) {
+                emptyNeighbors.addFirst(d);
+            }
+            if (neighbors.get(d).name().equals("clorus")) {
+                anyClorus = true;
+            }
+        }
 
-        if (false) { // FIXME
+        /** Deque 不能直接判断是否为null，可用isEmpty()，或者size()==0 */
+        if (emptyNeighbors.isEmpty()) { // FIXME
             // TODO
+            return new Action(Action.ActionType.STAY);
         }
 
         // Rule 2
         // HINT: randomEntry(emptyNeighbors)
+        else if (energy >= 1) {
+            Plip baby = replicate();
+            Direction ranEmptyDir = HugLifeUtils.randomEntry(emptyNeighbors);
+            return new Action(Action.ActionType.REPLICATE, ranEmptyDir);
+        }
 
         // Rule 3
+        /** Math.random() is a number between 0 and 1 */
+        else if (anyClorus == true && Math.random() < movePossibility) {
+            Direction ranEmptyDir = HugLifeUtils.randomEntry(emptyNeighbors);
+            return new Action(Action.ActionType.MOVE, ranEmptyDir);
+        }
 
         // Rule 4
-        return new Action(Action.ActionType.STAY);
+        else {
+            return new Action(Action.ActionType.STAY);
+        }
     }
 }
