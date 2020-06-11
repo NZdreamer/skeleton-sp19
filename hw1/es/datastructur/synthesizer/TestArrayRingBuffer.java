@@ -1,4 +1,5 @@
 package es.datastructur.synthesizer;
+import org.junit.Assert;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -8,7 +9,19 @@ import static org.junit.Assert.*;
 
 public class TestArrayRingBuffer {
     @Test
-    public void someTest() {
-        //ArrayRingBuffer arb = new ArrayRingBuffer(10);
+    public void test() {
+        ArrayRingBuffer arb = new ArrayRingBuffer(10);
+        Assert.assertEquals(true, arb.isEmpty());
+        arb.enqueue(3);
+        Assert.assertEquals(3,arb.dequeue());
+        Assert.assertEquals(true, arb.isEmpty());
+        arb.enqueue(4);
+        arb.enqueue(5);
+        Assert.assertEquals(4,arb.peek());
+        Assert.assertEquals(false, arb.isEmpty());
+        arb.enqueue(6);
+        arb.enqueue(7);
+        Assert.assertEquals(4,arb.peek());
+        Assert.assertEquals(4,arb.dequeue());
     }
 }
