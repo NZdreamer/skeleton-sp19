@@ -1,3 +1,5 @@
+
+
 public class UnionFind {
 
     // TODO - Add instance variables?
@@ -7,14 +9,15 @@ public class UnionFind {
        vertices are in disjoint sets. */
     public UnionFind(int n) {
         disjointSet = new int[n];
-        for (int i : disjointSet) {
+        //for (int i : disjointSet) {
+        for (int i = 0; i < disjointSet.length; i++) {
             disjointSet[i] = -1;
         }
     }
 
     /* Throws an exception if v1 is not a valid index. */
     private void validate(int vertex) {
-        if (vertex < -1 || vertex >= n) {
+        if (vertex < -1 || vertex >= disjointSet.length) {
             throw new IllegalArgumentException("v1 is not a valid index");
         }
     }
@@ -24,7 +27,7 @@ public class UnionFind {
         validate(v1);
         int root = find(v1);
         int num = 0;
-        for (int i : disjointSet) {
+        for (int i = 0; i < disjointSet.length; i++) {
             if (find(i) == root) {
                 num++;
             }
@@ -58,10 +61,10 @@ public class UnionFind {
         validate(v1);
         validate(v2);
         if (sizeOf(v1) > sizeOf(v2)) {
-            disjointSet[v2] = find[v1];
+            disjointSet[v2] = find(v1);
         }
         else {
-            disjointSet[v1] = find[v2];
+            disjointSet[v1] = find(v2);
         }
     }
 
@@ -69,10 +72,10 @@ public class UnionFind {
        allowing for fast search-time. */
     public int find(int vertex) {
         validate(vertex);
-        if (disjointSet[vertex] = -1) {
+        if (disjointSet[vertex] == -1) {
             return vertex;
         }
-        find(disjointSet(vertex));
+        return find(disjointSet[vertex]);
     }
 
 }
