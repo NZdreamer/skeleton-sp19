@@ -74,10 +74,11 @@ public class TestBSTMap {
     public void sanityPutTest() {
     	BSTMap<String, Integer> b = new BSTMap<String, Integer>();
         b.put("hi", 1);
+        b.put("bye", 2);
         assertTrue(b.containsKey("hi") && b.get("hi") != null);
     }
 
     public static void main(String[] args) {
-        jh61b.junit.TestRunner.runTests(TestBSTMap.class);
+        //jh61b.junit.TestRunner.runTests(TestBSTMap.class);
     }
 }
