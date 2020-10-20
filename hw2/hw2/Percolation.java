@@ -26,7 +26,7 @@ public class Percolation {
     }
 
     // transfer row and collum into 1d set for WeightedQuickUnionUF
-    public int xyTo1D(int r, int c) {
+    private int xyTo1D(int r, int c) {
         int num = r * n + c;
         return num;
     }
@@ -69,9 +69,9 @@ public class Percolation {
         }
         if (!isOpen(row, col)) {
             items[row][col] = true;
-            checkNeighbor(row, col);
             open += 1;
         }
+        checkNeighbor(row, col);
     }
 
     // is the site (row, col) open?
@@ -122,6 +122,4 @@ public class Percolation {
         p.open(4, 4);
         Assert.assertTrue(p.percolates());
     }
-
-
 }
