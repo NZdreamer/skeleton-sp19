@@ -1,11 +1,11 @@
 package hw2;
 
-import edu.princeton.cs.algs4.*;
+import edu.princeton.cs.algs4.StdRandom;
 
 public class PercolationStats {
-    int n;
-    int t;
-    int[] x;
+    private int n;
+    private int t;
+    private int[] x;
 
     // perform T independent experiments on an N-by-N grid
     public PercolationStats(int N, int T, PercolationFactory pf) {
@@ -14,6 +14,7 @@ public class PercolationStats {
         }
         n = N;
         t = T;
+        x = new int[N];
         Percolation p = pf.make(N);
         for (int i = 0; i < T; i++) {
             int randomR = StdRandom.uniform(0, N);
@@ -31,7 +32,7 @@ public class PercolationStats {
         for (int xi : x) {
             sum += xi;
         }
-        return (double)sum / (double)t;
+        return (double) sum / (double) t;
     }
 
     // sample standard deviation of percolation threshold
@@ -40,7 +41,7 @@ public class PercolationStats {
         for (int xi : x) {
             sum += (xi - this.mean()) * (xi - this.mean());
         }
-        double dev = (double)sum / (double)(t - 1);
+        double dev = (double) sum / (double) (t - 1);
         return Math.sqrt(dev);
     }
 

@@ -5,10 +5,10 @@ import org.junit.Assert;
 import org.junit.Assert.*;
 
 public class Percolation {
-    boolean[][] items;
-    WeightedQuickUnionUF grid;
-    int n;
-    int open;
+    private boolean[][] items;
+    private WeightedQuickUnionUF grid;
+    private int n;
+    private int open;
 
     // create N-by-N grid, with all sites initially blocked
     public Percolation(int N) {
@@ -32,7 +32,7 @@ public class Percolation {
     }
 
     // union if have neighboring open sites
-    public void checkNeighbor (int row, int col) {
+    private void checkNeighbor(int row, int col) {
         int s = xyTo1D(row, col);
         if (row == 0) {
             grid.union(s, n * n);
@@ -67,9 +67,11 @@ public class Percolation {
         if (row > n - 1 || row < 0 || col > n - 1 || col < 0) {
             throw new java.lang.IndexOutOfBoundsException("check row and collum number");
         }
-        items[row][col] = true;
-        checkNeighbor(row, col);
-        open += 1;
+        if (!isOpen(row, col)) {
+            items[row][col] = true;
+            checkNeighbor(row, col);
+            open += 1;
+        }
     }
 
     // is the site (row, col) open?
@@ -103,21 +105,21 @@ public class Percolation {
     // use for unit testing (not required, but keep this here for the autograder)
     public static void main(String[] args) {
         Percolation p = new Percolation(5);
-        p.open(3,4);
-        p.open(2,4);
-        Assert.assertTrue(p.isOpen(3,4));
+        p.open(3, 4);
+        p.open(2, 4);
+        Assert.assertTrue(p.isOpen(3, 4));
         Assert.assertEquals(2, p.numberOfOpenSites());
-        Assert.assertFalse(p.isFull(2,4));
-        p.open(2,2);
-        p.open(2,3);
-        Assert.assertTrue(p.isOpen(2,2));
-        Assert.assertFalse(p.isFull(2,2));
-        p.open(0,2);
-        p.open(1,2);
-        Assert.assertTrue(p.isFull(1,2));
-        Assert.assertTrue(p.isFull(3,4));
+        Assert.assertFalse(p.isFull(2, 4));
+        p.open(2, 2);
+        p.open(2, 3);
+        Assert.assertTrue(p.isOpen(2, 2));
+        Assert.assertFalse(p.isFull(2, 2));
+        p.open(0, 2);
+        p.open(1, 2);
+        Assert.assertTrue(p.isFull(1, 2));
+        Assert.assertTrue(p.isFull(3, 4));
         Assert.assertFalse(p.percolates());
-        p.open(4,4);
+        p.open(4, 4);
         Assert.assertTrue(p.percolates());
     }
 
